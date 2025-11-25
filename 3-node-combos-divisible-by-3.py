@@ -2,33 +2,36 @@ def find_divisible_combinations():
     # Configuration
     max_nodes_per_layer = 6
     
-    print(f"{'L1':<5} {'L2':<5} {'L3':<5} | {'Calculation':<20} | {'Total':<5}")
-    print("-" * 50)
+    # Updated headers to include the new Product column
+    print(f"{'L1':<3} {'L2':<3} {'L3':<3} | {'Calculation':<18} | {'Conn Sum':<8} | {'Prod Calc':<10} | {'Prod Total':<10}")
+    print("-" * 80)
 
     count_found = 0
 
-    # Iterate through Layer 1 nodes (1 to 6)
     for l1 in range(1, max_nodes_per_layer + 1):
-        # Iterate through Layer 2 nodes (1 to 6)
         for l2 in range(1, max_nodes_per_layer + 1):
-            # Iterate through Layer 3 nodes (1 to 6)
             for l3 in range(1, max_nodes_per_layer + 1):
                 
-                # Calculate connections between layers
-                # (L1 connects to L2) + (L2 connects to L3) + (L3 connects to L1)
+                # 1. Calculate Connections
                 conns_1_2 = l1 * l2
                 conns_2_3 = l2 * l3
                 conns_3_1 = l3 * l1
-                
                 total_connections = conns_1_2 + conns_2_3 + conns_3_1
                 
-                # Check if divisible by 3
-                if total_connections % 3 == 0:
+                # 2. Calculate Product of nodes
+                node_product = l1 * l2 * l3
+                
+                # 3. Check BOTH conditions
+                # (Connections divisible by 3) AND (Product divisible by 3)
+                if total_connections % 3 == 0 and node_product % 3 == 0:
                     count_found += 1
-                    calc_str = f"{l1}x{l2} + {l2}x{l3} + {l3}x{l1}"
-                    print(f"{l1:<5} {l2:<5} {l3:<5} | {calc_str:<20} | {total_connections:<5}")
+                    
+                    conn_calc_str = f"{l1}x{l2} + {l2}x{l3} + {l3}x{l1}"
+                    prod_calc_str = f"{l1}x{l2}x{l3}"
+                    
+                    print(f"{l1:<3} {l2:<3} {l3:<3} | {conn_calc_str:<18} | {total_connections:<8} | {prod_calc_str:<10} | {node_product:<10}")
 
-    print("-" * 50)
+    print("-" * 80)
     print(f"Total combinations found: {count_found}")
 
 if __name__ == "__main__":
