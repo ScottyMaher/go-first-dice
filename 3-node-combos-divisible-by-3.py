@@ -2,7 +2,7 @@ def find_divisible_combinations():
     # Configuration
     max_nodes_per_layer = 6
     
-    # Updated headers to include the new Product column
+    # Same columns as before
     print(f"{'L1':<3} {'L2':<3} {'L3':<3} | {'Calculation':<18} | {'Conn Sum':<8} | {'Prod Calc':<10} | {'Prod Total':<10}")
     print("-" * 80)
 
@@ -12,7 +12,7 @@ def find_divisible_combinations():
         for l2 in range(1, max_nodes_per_layer + 1):
             for l3 in range(1, max_nodes_per_layer + 1):
                 
-                # 1. Calculate Connections
+                # 1. Calculate Connections (Connections 1-2, 2-3, 3-1)
                 conns_1_2 = l1 * l2
                 conns_2_3 = l2 * l3
                 conns_3_1 = l3 * l1
@@ -21,9 +21,10 @@ def find_divisible_combinations():
                 # 2. Calculate Product of nodes
                 node_product = l1 * l2 * l3
                 
-                # 3. Check BOTH conditions
-                # (Connections divisible by 3) AND (Product divisible by 3)
-                if total_connections % 3 == 0 and node_product % 3 == 0:
+                # 3. Check Condition
+                # ONLY check if the node_product is divisible by 3.
+                # We ignore total_connections for the filtering, but still print it.
+                if node_product % 3 == 0:
                     count_found += 1
                     
                     conn_calc_str = f"{l1}x{l2} + {l2}x{l3} + {l3}x{l1}"
